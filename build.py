@@ -45,7 +45,7 @@ AUTHOR = {
 
 ROOT = pathlib.Path(__file__).resolve().parent
 SLUG = re.compile(r"^[a-z0-9]+$")
-STATIC_SUFFIXES = {".html", ".ico", ".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp", ".pdf"}
+STATIC_SUFFIXES = {".html", ".txt", ".xml", ".ico", ".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp", ".pdf"}
 WRITINGS = re.compile(r"(<!-- writings -->\n)(.*?)(\s*<!-- /writings -->)", re.S)
 
 
@@ -190,7 +190,7 @@ def build(root, out):
         shutil.rmtree(out)
     out.mkdir(parents=True)
     for item in root.iterdir():
-        if item.is_file() and (item.suffix in STATIC_SUFFIXES or item.name in ("CNAME", "robots.txt")) and item.name != "index.html":
+        if item.is_file() and (item.suffix in STATIC_SUFFIXES or item.name == "CNAME") and item.name not in ("index.html", "requirements.txt"):
             shutil.copy2(item, out / item.name)
     if (root / "assets").is_dir():
         shutil.copytree(root / "assets", out / "assets")
